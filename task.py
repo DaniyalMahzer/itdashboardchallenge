@@ -15,10 +15,9 @@ class ItDashboard:
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
 
     def get_agencies(self):
-        self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a')
+        self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a', timeout=timedelta(seconds=30))
         self.browser.find_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a').click()
-        self.agencies = self.browser.find_elements\
-            ('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
+        self.agencies = self.browser.find_elements('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
     def write_agencies(self):
         companies = ['companies', ]
