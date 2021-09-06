@@ -39,7 +39,7 @@ class ItDashboard:
         agency = self.agencies[agency]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="block-itdb-custom--5"]/div/div/div/div[2]/div')
+        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_wrapper"]/div[3]/div[1]')
         headers = self.browser.find_element('//*[@id="investments-table-object_wrapper"]/div[3]'
                                             ).find_element('//*[@id="investments-table-object_wrapper"]/div[3]/div[1]')
         sleep(10)
