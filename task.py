@@ -1,6 +1,6 @@
 import os
 from time import sleep
-
+from datetime import timedelta
 from RPA.Browser.Selenium import Selenium
 from RPA.Excel.Files import Files
 
@@ -40,7 +40,7 @@ class ItDashboard:
         agency = self.agencies[agency]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout=None
+        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout= timedelta(seconds=50)
                                                       , limit=30)
         self.browser.find_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]').click()
         sleep(10)
