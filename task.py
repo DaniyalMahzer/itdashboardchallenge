@@ -21,7 +21,7 @@ class ItDashboard:
         agencies = []
         investments = []
         for item in self.agencies:
-            agency_data = item.text.split
+            agency_data = item.text.split('\n')
             agencies.append(agency_data[0])
             investments.append(agency_data[2])
         entries = {"companies": agencies, "investmants": investments}
