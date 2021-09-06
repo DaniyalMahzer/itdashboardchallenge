@@ -24,7 +24,6 @@ class ItDashboard:
         companies = ['companies', ]
         investments = ['investments', ]
         for item in self.agencies:
-            print(item.link)
             agency_data = item.text.split('\n')
             companies.append(agency_data[0])
             investments.append(agency_data[2])
@@ -42,6 +41,7 @@ class ItDashboard:
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
         sleep(10)
+
 
 if __name__ == "__main__":
     obj = ItDashboard()
