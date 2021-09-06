@@ -20,11 +20,11 @@ class ItDashboard:
     def get_agencies(self):
         for item in self.agencies:
             data = item.text.split
-            self.agencies_data = {'company name': data[0], 'amount': data[2]}
             wb = self.files.create_workbook("output/Agencies.xlsx")
-            wb.append_worksheet("Sheet", self.agencies_data)
-        wb.save()
-        wb.close()
+            wb.append_worksheet("Sheet", [data[0], data[2]])
+            wb.save()
+
 
 if __name__ == "__main__":
     it_dashboard = ItDashboard("https://itdashboard.gov/")
+    it_dashboard.get_agencies()
