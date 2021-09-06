@@ -36,16 +36,16 @@ class ItDashboard:
         self.get_agencies()
         self.write_agencies()
 
-    def scrap_agency(self, agency_open):
-        agency = self.agencies[agency_open]
-        self.browser.wait_until_page_contains_element(agency)
-        self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout= timedelta(seconds=50))
-        self.browser.find_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]').click()
-        sleep(10)
+    # def scrap_agency(self, agency_open):
+    #     agency = self.agencies[agency_open]
+    #     self.browser.wait_until_page_contains_element(agency)
+    #     self.browser.find_element(agency).click()
+    #     self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout= timedelta(seconds=50))
+    #     self.browser.find_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]').click()
+    #     sleep(10)
 
 
 if __name__ == "__main__":
     obj = ItDashboard()
     obj.make_agency_excel()
-    obj.scrap_agency(0)
+    # obj.scrap_agency(0)
