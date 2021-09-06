@@ -46,3 +46,4 @@ class ItDashboard:
 if __name__ == "__main__":
     obj = ItDashboard()
     obj.make_agency_excel()
+    obj.scrap_agency(0)
