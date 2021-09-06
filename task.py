@@ -19,9 +19,10 @@ class ItDashboard:
             ('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
     def write_agencies(self):
-        companies = []
-        investments = []
+        companies = ['companies', ]
+        investments = ['investments', ]
         for item in self.agencies:
+            print(item.link)
             agency_data = item.text.split('\n')
             companies.append(agency_data[0])
             investments.append(agency_data[2])
