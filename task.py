@@ -15,7 +15,7 @@ class ItDashboard:
             ('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
         sleep(10)
-        print(self.agencies)
+        print(self.agencies.text)
 
 
 if __name__ == "__main__":
