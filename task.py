@@ -21,12 +21,14 @@ class ItDashboard:
     def agencies_excel(self):
         self.app.open_application()
         self.app.open_workbook('Agencies.xlsx')
+        self.app.set_active_worksheet(sheetname='Agencies')
         for i, item in enumerate(self.agencies):
                 agency_data = item.text.split("\n")
                 self.app.write_to_cells(row=i, column=i, value=agency_data[0])
                 self.app.write_to_cells(row=i, column=i+1, value=agency_data[2])
         self.app.save_excel()
         self.app.quit_application()
+
 
 if __name__ == "__main__":
     it_dashboard = ItDashboard("https://itdashboard.gov/")
