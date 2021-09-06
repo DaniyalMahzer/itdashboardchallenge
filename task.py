@@ -13,7 +13,6 @@ class ItDashboard:
         self.files = Files()
         self.browser.open_available_browser("https://itdashboard.gov/")
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
-
     def get_agencies(self):
         self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a')
         self.browser.find_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a').click()
@@ -40,6 +39,10 @@ class ItDashboard:
         agency = self.agencies[agency]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
+        self.browser.wait_until_page_contains_element('//*[@id="block-itdb-custom--5"]/div/div/div/div[2]/div')
+        headers = self.browser.find_element('//*[@id="block-itdb-custom--5"]/div/div/div/div[2]/div').\
+            find_element_by_tag_name("thead").find_element_by_tag_name("tr").find_elements_by_tag_name("th")
+        print(headers)
         sleep(10)
 
 
