@@ -1,4 +1,6 @@
 import os
+from time import sleep
+
 from RPA.Browser.Selenium import Selenium
 from RPA.Excel.Files import Files
 
@@ -35,6 +37,11 @@ class ItDashboard:
         self.get_agencies()
         self.write_agencies()
 
+    def scrap_agency(self, agency):
+        agency = self.agencies[agency]
+        self.browser.wait_until_page_contains_element(agency)
+        self.browser.find_element(agency).click()
+        sleep(10)
 
 if __name__ == "__main__":
     obj = ItDashboard()
