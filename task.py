@@ -21,10 +21,10 @@ class ItDashboard:
         agencies = []
         investments = []
         for item in self.agencies:
-            data = item.text.split
-            agencies.append(data[0])
-            investments.append(data[2])
-        entries = {"companies":agencies, "investmants":investments}
+            agency_data = item.text.split
+            agencies.append(agency_data[0])
+            investments.append(agency_data[2])
+        entries = {"companies": agencies, "investmants": investments}
         wb = self.files.create_workbook("output/Agencies.xlsx")
         wb.append_worksheet("Sheet", entries)
         wb.save()
