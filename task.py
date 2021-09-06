@@ -7,6 +7,9 @@ from RPA.Excel.Files import Files
 
 class ItDashboard:
     agencies = []
+    headers = []
+    uii_links = []
+    investment_table_data = []
 
     def __init__(self):
         self.browser = Selenium()
@@ -31,18 +34,17 @@ class ItDashboard:
         wb.append_worksheet("Sheet", entries)
         wb.save()
 
-    def make_agency_excel(self):
-        self.get_agencies()
-        self.write_agencies()
-
     def scrap_agency(self, agency_open):
         agency = self.agencies[agency_open]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout= timedelta(seconds=50))
-        self.browser.find_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]').click()
+        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select')
+        self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         sleep(10)
 
+    def make_agency_excel(self):
+        self.get_agencies()
+        self.write_agencies()
 
 if __name__ == "__main__":
     obj = ItDashboard()
