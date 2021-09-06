@@ -40,6 +40,7 @@ class ItDashboard:
         self.browser.find_element(agency).click()
         self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select', timeout=timedelta(seconds=50))
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
+        self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
         sleep(10)
 
     def make_agency_excel(self):
