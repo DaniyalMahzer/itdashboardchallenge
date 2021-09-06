@@ -27,7 +27,7 @@ class ItDashboard:
             investments.append(agency_data[2])
         entries = {"companies": companies, "investments": investments}
         wb = self.files.create_workbook("output/Agencies.xlsx")
-        wb.append_worksheet("agencies", entries)
+        wb.append_worksheet("Sheet", entries)
         wb.save()
 
     def make_agency_excel(self):
