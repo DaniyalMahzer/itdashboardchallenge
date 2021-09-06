@@ -11,13 +11,14 @@ class ItDashboard:
         self.browser.open_available_browser(url)
         self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a')
         self.browser.find_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a').click()
-        self.agencies = self.browser.find_elements('//*[@id="agency-tiles-widget"]')
+        self.agencies = self.browser.find_elements\
+            ('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
         sleep(10)
 
     def test_print(self):
         print(self.agencies)
 
+
 if __name__ == "__main__":
     it_dashboard = ItDashboard("https://itdashboard.gov/")
-    it_dashboard.test_print()
