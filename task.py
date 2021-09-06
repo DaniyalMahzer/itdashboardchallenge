@@ -18,13 +18,16 @@ class ItDashboard:
         sleep(10)
 
     def get_agencies(self):
+        agencies = []
+        investments = []
         for item in self.agencies:
             data = item.text.split
-            wb = self.files.create_workbook("output/Agencies.xlsx")
-            entry = {"company": data[0], "investmant": data[2]}
-            wb.append_worksheet("Sheet", entry)
-            wb.save()
-
+            agencies.append(data[0])
+            investments.append(data[2])
+        entries = {"companies":agencies, "investmants":investments}
+        wb = self.files.create_workbook("output/Agencies.xlsx")
+        wb.append_worksheet("Sheet", entries)
+        wb.save()
 
 if __name__ == "__main__":
     it_dashboard = ItDashboard("https://itdashboard.gov/")
