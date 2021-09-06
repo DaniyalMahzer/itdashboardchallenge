@@ -40,7 +40,8 @@ class ItDashboard:
         agency = self.agencies[agency]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]')
+        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout=None
+                                                      , limit=30)
         self.browser.find_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]').click()
         sleep(10)
 
