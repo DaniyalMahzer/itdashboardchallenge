@@ -40,8 +40,8 @@ class ItDashboard:
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
         self.browser.wait_until_page_contains_element('//*[@id="block-itdb-custom--5"]/div/div/div/div[2]/div')
-        headers = self.browser.find_element('//*[@id="block-itdb-custom--5"]/div/div/div/div[2]/div').\
-            find_element_by_tag_name("thead").find_element_by_tag_name("tr").find_elements_by_tag_name("th")
+        headers = self.browser.find_element\
+            ('//*[@id="investments-table-object_wrapper"]/div[3]/div[1]/div/table/thead/tr[2]').find_elements_by_tag_name("th")
         print(headers)
         sleep(10)
 
