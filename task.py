@@ -17,7 +17,8 @@ class ItDashboard:
         sleep(10)
         print(self.agencies)
         for item in self.agencies:
-            print(item.text)
+            data = item.text.split("\n")
+            print(data[0], data[-1])
 
 
 if __name__ == "__main__":
