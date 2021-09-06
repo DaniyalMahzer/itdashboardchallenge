@@ -14,5 +14,5 @@ class ItDashboard:
 
 
 if __name__ == "__main__":
-    it_dashboard = ItDashboard()
+    it_dashboard = ItDashboard(https://itdashboard.gov/)
 
