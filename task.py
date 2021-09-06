@@ -21,7 +21,8 @@ class ItDashboard:
         for item in self.agencies:
             data = item.text.split
             wb = self.files.create_workbook("output/Agencies.xlsx")
-            wb.append_worksheet("Sheet", [data[0], data[2]])
+            entry = {"company": data[0], "investmant": data[2]}
+            wb.append_worksheet("Sheet", entry)
             wb.save()
 
 
