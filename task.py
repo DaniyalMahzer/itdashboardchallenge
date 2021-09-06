@@ -16,6 +16,8 @@ class ItDashboard:
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
         sleep(10)
         print(self.agencies)
+        for item in self.agencies:
+            print(item.text)
 
 
 if __name__ == "__main__":
