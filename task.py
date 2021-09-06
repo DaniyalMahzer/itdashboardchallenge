@@ -36,8 +36,8 @@ class ItDashboard:
         self.get_agencies()
         self.write_agencies()
 
-    def scrap_agency(self, agency):
-        agency = self.agencies[agency]
+    def scrap_agency(self, agency_open):
+        agency = self.agencies[agency_open]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
         self.browser.wait_until_page_contains_element('//*[@id="investments-table-object"]/tbody/tr[1]/td[1]', timeout= timedelta(seconds=50))
