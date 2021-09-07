@@ -35,38 +35,39 @@ class ItDashboard:
         wb.append_worksheet("Sheet", entries)
         wb.save()
 
-    def scrap_agency(self, agency_open):
-        agency = self.agencies[agency_open]
-        self.browser.wait_until_page_contains_element(agency)
-        self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_info"]',
-                                                      timeout=timedelta(seconds=50))
-        raw_total = self.browser.find_element('//*[@id="investments-table-object_info"]')
-        data = raw_total.text.split(" ")
-        total_entries = int(data[-2])
-        self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
-        self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
-        sleep(30)
-        for i in range(1, total_entries + 1):
-            try:
-                item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
-            except:
-                item = ''
-            if item:
-                self.uii_ids.append(item)
-
-            try:
-                link = self.browser.find_element(
-                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
-                    "a").get_attribute("href")
-            except:
-                link = ''
-            if link:
-                self.uii_links.append(link)
-            data = {"uii": self.uii_links, "links": self.uii_links}
-        wb = self.files.create_workbook("output/uii.xlsx")
-        wb.append_worksheet("Sheet", data)
-        wb.save()
+    # def scrap_agency(self, agency_open):
+    #     agency = self.agencies[agency_open]
+    #     self.browser.wait_until_page_contains_element(agency)
+    #     self.browser.find_element(agency).click()
+    #     self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_info"]',
+    #                                                   timeout=timedelta(seconds=50))
+    #     raw_total = self.browser.find_element('//*[@id="investments-table-object_info"]')
+    #     data = raw_total.text.split(" ")
+    #     total_entries = int(data[-2])
+    #     print(total_entries)
+    #     self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
+    #     self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
+    #     sleep(30)
+    #     for i in range(1, total_entries + 1):
+    #         try:
+    #             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
+    #         except:
+    #             item = ''
+    #         if item:
+    #             self.uii_ids.append(item)
+    #
+    #         try:
+    #             link = self.browser.find_element(
+    #                 f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
+    #                 "a").get_attribute("href")
+    #         except:
+    #             link = ''
+    #         if link:
+    #             self.uii_links.append(link)
+    #         data = {"uii": self.uii_links, "links": self.uii_links}
+    #     wb = self.files.create_workbook("output/uii.xlsx")
+    #     wb.append_worksheet("Sheet", data)
+    #     wb.save()
 
     def make_agency_excel(self):
         self.get_agencies()
@@ -76,4 +77,4 @@ class ItDashboard:
 if __name__ == "__main__":
     obj = ItDashboard()
     obj.make_agency_excel()
-    obj.scrap_agency(0)
+    # obj.scrap_agency(0)
