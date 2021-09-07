@@ -4,6 +4,11 @@ from datetime import timedelta
 from RPA.Browser.Selenium import Selenium
 from RPA.Excel.Files import Files
 
+DOWNLOAD_DIR = "output"
+
+
+if not os.path.exists(DOWNLOAD_DIR):
+    os.mkdir(DOWNLOAD_DIR)
 
 class ItDashboard:
     agencies = []
@@ -12,7 +17,7 @@ class ItDashboard:
         self.browser = Selenium()
         self.files = Files()
         self.browser.open_available_browser("https://itdashboard.gov/")
-        self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
+        self.browser.set_download_directory(os.path.join(os.getcwd(), f"{DOWNLOAD_DIR}/"))
 
     def get_agencies(self):
         self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a')
