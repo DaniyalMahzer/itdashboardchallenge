@@ -44,26 +44,17 @@ class ItDashboard:
         raw_total = self.browser.find_element('//*[@id="investments-table-object_info"]')
         data = raw_total.text.split(" ")
         total_entries = int(data[-2])
-        print(total_entries)
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
-        self.browser.wait_until_page_contains_element(f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]')
+        self.browser.wait_until_page_contains_element(
+            f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]')
         for i in range(1, total_entries + 1):
-            try:
-                item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
-            except:
-                item = ''
-            if item:
-                self.uii_ids.append(item)
-
-            try:
-                link = self.browser.find_element(
-                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
-                    "a").get_attribute("href")
-            except:
-                link = ''
-            if link:
-                self.uii_links.append(link)
+            item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
+            link = self.browser.find_element(
+                f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
+                "a").get_attribute("href")
+            self.uii_ids.append(item.text)
+            self.uii_links.append(link)
             data = {"uii": self.uii_links, "links": self.uii_links}
         wb = self.files.create_workbook("output/uii.xlsx")
         wb.append_worksheet("Sheet", data)
