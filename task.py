@@ -48,6 +48,12 @@ class ItDashboard:
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
         self.browser.wait_until_page_contains_element(
             f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
+        bureau = []
+        investment_title = []
+        total_FY2021 = []
+        type_agency = []
+        CIO_rating = []
+        num_of_project =[]
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
             try:
@@ -56,9 +62,37 @@ class ItDashboard:
                     "a").get_attribute("href")
             except:
                 link = ''
+            try:
+                bureau_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[2]')
+                investment_title_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[3]')
+                total_FY2021_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[4]')
+                type_agency_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[5]')
+                CIO_rating_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[6]')
+                num_of_project_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[7]')
+            except:
+                bureau_current = ''
+                investment_title_current = ''
+                total_FY2021_current = ''
+                type_agency_current = ''
+                CIO_rating_current = ''
+                num_of_project_current = ''
+            bureau.append(bureau_current)
+            investment_title.append(investment_title_current)
+            total_FY2021.append(total_FY2021_current)
+            type_agency.append(type_agency_current)
+            CIO_rating.append(CIO_rating_current)
+            num_of_project.append(num_of_project_current)
             self.uii_ids.append(item.text)
             self.uii_links.append(link)
-            data = {"uii": self.uii_ids, "links": self.uii_links}
+        data = {"uii": self.uii_ids,
+                "links": self.uii_links,
+                "bureau": bureau,
+                "company": investment_title,
+                "FY2021": total_FY2021,
+                "agency_type": type_agency,
+                "CIO rating": CIO_rating,
+                "# of project": num_of_project,
+                }
         wb = self.files.create_workbook("output/uii.xlsx")
         wb.append_worksheet("Sheet", data)
         wb.save()
