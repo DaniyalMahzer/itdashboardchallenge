@@ -47,7 +47,7 @@ class ItDashboard:
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
         self.browser.wait_until_page_contains_element(
-            f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]')
+            f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
             link = self.browser.find_element(
