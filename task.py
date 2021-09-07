@@ -108,7 +108,6 @@ class ItDashboard:
                             break
                 sleep(2)
                 self.browser.go_to(url)
-                self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
                 self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select', timeout=timedelta(seconds=20))
                 self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select')
                 self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
