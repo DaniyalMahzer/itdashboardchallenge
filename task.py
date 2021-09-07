@@ -7,7 +7,7 @@ from RPA.Excel.Files import Files
 
 class ItDashboard:
     agencies = []
-    headers = []
+    uii_ids = []
     uii_links = []
     investment_table_data = []
 
@@ -18,9 +18,10 @@ class ItDashboard:
         self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
 
     def get_agencies(self):
-        self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a', timeout=timedelta(seconds=30))
+        self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a',)
         self.browser.find_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a').click()
-        self.agencies = self.browser.find_elements('//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
+        self.agencies = self.browser.find_elements(
+            '//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
     def write_agencies(self):
         companies = ['companies', ]
@@ -38,14 +39,38 @@ class ItDashboard:
         agency = self.agencies[agency_open]
         self.browser.wait_until_page_contains_element(agency)
         self.browser.find_element(agency).click()
-        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select', timeout=timedelta(seconds=50))
+        self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_info"]',
+                                                      timeout=timedelta(seconds=50))
+        raw_total = self.browser.find_element('//*[@id="investments-table-object_info"]')
+        data = raw_total.text.split(" ")
+        total_entries = int(data[-2])
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
-        sleep(10)
+        for i in range(1, total_entries + 1):
+            try:
+                item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
+            except:
+                item = ''
+            if item:
+                self.uii_ids.append(item)
+
+            try:
+                link = self.browser.find_element(
+                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
+                    "a").get_attribute("href")
+            except:
+                link = ''
+            if link:
+                self.uii_links.append(link)
+            data = {"uii": self.uii_links, "links": self.uii_links}
+        wb = self.files.create_workbook("output/Agencies.xlsx")
+        wb.append_worksheet("Sheet", data)
+        wb.save()
 
     def make_agency_excel(self):
         self.get_agencies()
         self.write_agencies()
+
 
 if __name__ == "__main__":
     obj = ItDashboard()
