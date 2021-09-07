@@ -81,12 +81,12 @@ class ItDashboard:
                 while True:
                     try:
                         sleep(2)
-                        if self.browser.find_element('//div[@id="business-case-pdf"]').find_element_by_tag_name("span"):
+                        if downloader.find_element('//div[@id="business-case-pdf"]').find_element_by_tag_name("span"):
                             sleep(1)
                         else:
                             break
                     except:
-                        if self.browser.find_element('//*[contains(@id,"business-case-pdf")]//a[@aria-busy="false"]'):
+                        if downloader.find_element('//*[contains(@id,"business-case-pdf")]//a[@aria-busy="false"]'):
                             sleep(1)
                             break
                 downloader.close_browser()
