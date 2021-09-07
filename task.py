@@ -33,10 +33,11 @@ class ItDashboard:
         wb.save()
 
     def get_headers(self):
-        for i in range(6):
+        for i in range(1, 7):
             head = self.browser.find_element(
                 f'//*[@id="investments-table-object_wrapper"]/div[3]/div[1]/div/table/thead/tr[2]/th[{i}]')
             self.headers.append(head)
+
     def scrap_agency(self, agency_open):
         agency = self.agencies[agency_open]
         self.browser.wait_until_page_contains_element(agency)
@@ -51,13 +52,13 @@ class ItDashboard:
         self.browser.wait_until_page_contains_element(
             f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
         self.get_headers()
-        uii_ids = [self.headers[0]]
-        bureau = [self.headers[1]]
-        investment_title = [self.headers[2]]
-        total_FY2021 = [self.headers[3]]
-        type_agency = [self.headers[4]]
-        CIO_rating = [self.headers[5]]
-        num_of_project =[self.headers[6]]
+        uii_ids = [self.headers[0], ]
+        bureau = [self.headers[1], ]
+        investment_title = [self.headers[2], ]
+        total_FY2021 = [self.headers[3], ]
+        type_agency = [self.headers[4], ]
+        CIO_rating = [self.headers[5], ]
+        num_of_project =[self.headers[6], ]
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
             try:
