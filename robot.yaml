@@ -1,5 +1,5 @@
 tasks:
-  Task1:
+  Run Python:
     shell: python task.py
 
 condaConfigFile: conda.yaml
