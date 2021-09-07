@@ -58,7 +58,7 @@ class ItDashboard:
                 link = ''
             self.uii_ids.append(item.text)
             self.uii_links.append(link)
-            data = {"uii": self.uii_links, "links": self.uii_links}
+            data = {"uii": self.uii_ids, "links": self.uii_links}
         wb = self.files.create_workbook("output/uii.xlsx")
         wb.append_worksheet("Sheet", data)
         wb.save()
