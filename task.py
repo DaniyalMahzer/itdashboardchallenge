@@ -14,13 +14,9 @@ class ItDashboard:
         self.browser.open_available_browser("https://itdashboard.gov/")
 
     def get_agencies(self):
-        self.browser.wait_until_page_contains_element('//*[@id="node-23"]')
-        self.browser.find_element('//*[@id="node-23"]').click()
-        while True:
-            try:
-                self.browser.wait_until_page_contains_element('//div[@id="agency-tiles-widget"]', timeout=timedelta(seconds=10))
-            except:
-                break
+        self.browser.wait_until_page_contains_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a')
+        self.browser.find_element('//*[@id="node-23"]/div/div/div/div/div/div/div/a').click()
+        sleep(5)
         self.agencies = self.browser.find_elements(
             '//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
@@ -37,10 +33,17 @@ class ItDashboard:
         wb.save()
 
     def get_headers(self):
-        for i in range(1, 7):
-            head = self.browser.find_element(
-                f'//*[@id="investments-table-object_wrapper"]/div[3]/div[1]/div/table/thead/tr[2]/th[{i}]')
-            self.headers.append(head)
+        while True:
+            try:
+                all_heads = self.browser.find_element(
+                    '//table[@class="datasource-table usa-table-borderless dataTable no-footer"]').find_element_by_tag_name(
+                    "thead").find_elements_by_tag_name("tr")[1].find_elements_by_tag_name("th")
+                if all_heads:
+                    break
+            except:
+                sleep(1)
+        for item in all_heads:
+            self.headers.append(item.text)
 
     def scrap_agency(self, agency_open):
         agency = self.agencies[agency_open]
@@ -56,14 +59,13 @@ class ItDashboard:
         self.browser.wait_until_page_contains_element(
             f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
         self.get_headers()
-        print(self.headers)
-        uii_ids = [self.headers[0], ]
-        bureau = [self.headers[1], ]
-        investment_title = [self.headers[2], ]
-        total_FY2021 = [self.headers[3], ]
-        type_agency = [self.headers[4], ]
-        CIO_rating = [self.headers[5], ]
-        num_of_project =[self.headers[6], ]
+        uii_ids = [self.headers[0]]
+        bureau = [self.headers[1]]
+        investment_title = [self.headers[2]]
+        total_FY2021 = [self.headers[3]]
+        type_agency = [self.headers[4]]
+        CIO_rating = [self.headers[5]]
+        num_of_project =[self.headers[6]]
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
             try:
@@ -90,7 +92,7 @@ class ItDashboard:
                 downloader = Selenium()
                 downloader.open_available_browser(link)
                 downloader.find_element('//div[@id="business-case-pdf"]').click()
-                downloader.set_download_directory("outputs/")
+                downloader.set_download_directory(os.path.join(os.getcwd(), "output/"))
                 while True:
                     try:
                         sleep(2)
@@ -120,7 +122,7 @@ class ItDashboard:
                 "# of project": num_of_project,
                 }
         wb = self.files.create_workbook("output/uii.xlsx")
-        wb.append_worksheet("Sheet", data)
+        wb.append_worksheet("Sheet", self.headers)
         wb.save()
 
     def make_agency_excel(self):
