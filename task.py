@@ -46,6 +46,7 @@ class ItDashboard:
         total_entries = int(data[-2])
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
+        sleep(30)
         for i in range(1, total_entries + 1):
             try:
                 item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
@@ -63,7 +64,7 @@ class ItDashboard:
             if link:
                 self.uii_links.append(link)
             data = {"uii": self.uii_links, "links": self.uii_links}
-        wb = self.files.create_workbook("output/Agencies.xlsx")
+        wb = self.files.create_workbook("output/uii.xlsx")
         wb.append_worksheet("Sheet", data)
         wb.save()
 
