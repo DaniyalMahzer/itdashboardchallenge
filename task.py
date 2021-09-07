@@ -7,9 +7,6 @@ from RPA.Excel.Files import Files
 
 class ItDashboard:
     agencies = []
-    uii_ids = []
-    uii_links = []
-    investment_table_data = []
 
     def __init__(self):
         self.browser = Selenium()
@@ -48,6 +45,7 @@ class ItDashboard:
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
         self.browser.wait_until_page_contains_element(
             f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
+        uii_ids = []
         bureau = []
         investment_title = []
         total_FY2021 = []
@@ -76,16 +74,30 @@ class ItDashboard:
                 type_agency_current = ''
                 CIO_rating_current = ''
                 num_of_project_current = ''
+            if link:
+                downloader = Selenium()
+                downloader.open_available_browser(link)
+                self.browser.find_element('//div[@id="business-case-pdf"]').click()
+                while True:
+                    try:
+                        sleep(2)
+                        if self.browser.find_element('//div[@id="business-case-pdf"]').find_element_by_tag_name("span"):
+                            sleep(1)
+                        else:
+                            break
+                    except:
+                        if self.browser.find_element('//*[contains(@id,"business-case-pdf")]//a[@aria-busy="false"]'):
+                            sleep(1)
+                            break
+                downloader.close_browser()
             bureau.append(bureau_current)
             investment_title.append(investment_title_current)
             total_FY2021.append(total_FY2021_current)
             type_agency.append(type_agency_current)
             CIO_rating.append(CIO_rating_current)
             num_of_project.append(num_of_project_current)
-            self.uii_ids.append(item.text)
-            self.uii_links.append(link)
-        data = {"uii": self.uii_ids,
-                "links": self.uii_links,
+            uii_ids.append(item.text)
+        data = {"uii": uii_ids,
                 "bureau": bureau,
                 "company": investment_title,
                 "FY2021": total_FY2021,
