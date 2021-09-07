@@ -12,7 +12,6 @@ class ItDashboard:
         self.browser = Selenium()
         self.files = Files()
         self.browser.open_available_browser("https://itdashboard.gov/")
-        self.browser.set_download_directory(os.path.join(os.getcwd(), "output/"))
 
     def get_agencies(self):
         self.browser.wait_until_page_contains_element('//*[@id="node-23"]',)
@@ -77,7 +76,8 @@ class ItDashboard:
             if link:
                 downloader = Selenium()
                 downloader.open_available_browser(link)
-                self.browser.find_element('//div[@id="business-case-pdf"]').click()
+                downloader.find_element('//div[@id="business-case-pdf"]').click()
+                downloader.set_download_directory(os.path.join(os.getcwd(), "output/"))
                 while True:
                     try:
                         sleep(2)
