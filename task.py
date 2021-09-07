@@ -50,9 +50,12 @@ class ItDashboard:
             f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=30))
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
-            link = self.browser.find_element(
-                f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
-                "a").get_attribute("href")
+            try:
+                link = self.browser.find_element(
+                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
+                    "a").get_attribute("href")
+            except:
+                link = ''
             self.uii_ids.append(item.text)
             self.uii_links.append(link)
             data = {"uii": self.uii_links, "links": self.uii_links}
