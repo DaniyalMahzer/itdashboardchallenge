@@ -16,7 +16,7 @@ class ItDashboard:
     def get_agencies(self):
         self.browser.wait_until_page_contains_element('//*[@id="node-23"]')
         self.browser.find_element('//*[@id="node-23"]').click()
-        self.browser.wait_until_page_contains_element('//div[@id="agency-tiles-widget"]')
+        self.browser.wait_until_page_contains_element('//div[@id="agency-tiles-widget"]', timeout=timedelta(seconds=10))
         self.agencies = self.browser.find_elements(
             '//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
