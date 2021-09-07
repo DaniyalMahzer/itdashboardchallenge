@@ -14,8 +14,9 @@ class ItDashboard:
         self.browser.open_available_browser("https://itdashboard.gov/")
 
     def get_agencies(self):
-        self.browser.wait_until_page_contains_element('//*[@id="node-23"]',)
+        self.browser.wait_until_page_contains_element('//*[@id="node-23"]')
         self.browser.find_element('//*[@id="node-23"]').click()
+        self.browser.wait_until_page_contains_element('//div[@id="agency-tiles-widget"]')
         self.agencies = self.browser.find_elements(
             '//div[@id="agency-tiles-widget"]//div[@class="col-sm-4 text-center noUnderline"]')
 
@@ -54,12 +55,6 @@ class ItDashboard:
         for i in range(1, total_entries + 1):
             item = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]')
             try:
-                link = self.browser.find_element(
-                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
-                    "a").get_attribute("href")
-            except:
-                link = ''
-            try:
                 bureau_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[2]').text
                 investment_title_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[3]').text
                 total_FY2021_current = self.browser.find_element(f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[4]').text
@@ -73,11 +68,17 @@ class ItDashboard:
                 type_agency_current = ''
                 CIO_rating_current = ''
                 num_of_project_current = ''
+            try:
+                link = self.browser.find_element(
+                    f'//*[@id="investments-table-object"]/tbody/tr[{i}]/td[1]').find_element_by_tag_name(
+                    "a").get_attribute("href")
+            except:
+                link = ''
             if link:
                 downloader = Selenium()
                 downloader.open_available_browser(link)
                 downloader.find_element('//div[@id="business-case-pdf"]').click()
-                downloader.set_download_directory(os.path.join(os.getcwd(), "output/"))
+                downloader.set_download_directory("output/")
                 while True:
                     try:
                         sleep(2)
@@ -89,6 +90,7 @@ class ItDashboard:
                         if downloader.find_element('//*[contains(@id,"business-case-pdf")]//a[@aria-busy="false"]'):
                             sleep(1)
                             break
+                sleep(2)
                 downloader.close_browser()
             bureau.append(bureau_current)
             investment_title.append(investment_title_current)
