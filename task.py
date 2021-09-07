@@ -59,7 +59,7 @@ class ItDashboard:
         self.browser.wait_until_page_contains_element('//*[@id="investments-table-object_length"]/label/select')
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select').click()
         self.browser.find_element('//*[@id="investments-table-object_length"]/label/select/option[4]').click()
-        self.browser.wait_until_page_contains_element(f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]')
+        self.browser.wait_until_page_contains_element(f'//*[@id="investments-table-object"]/tbody/tr[{total_entries}]/td[1]', timeout=timedelta(seconds=20))
         self.get_headers()
         uii_ids = [self.headers[0]]
         bureau = [self.headers[1]]
