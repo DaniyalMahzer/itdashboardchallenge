@@ -78,7 +78,7 @@ class ItDashboard:
                 downloader = Selenium()
                 downloader.open_available_browser(link)
                 downloader.find_element('//div[@id="business-case-pdf"]').click()
-                downloader.set_download_directory("~/.robocorp/assistant/outputs/")
+                downloader.set_download_directory(os.path.join("outputs/"))
                 while True:
                     try:
                         sleep(2)
