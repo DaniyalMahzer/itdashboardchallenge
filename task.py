@@ -168,4 +168,4 @@ class ItDashboard:
 if __name__ == "__main__":
     obj = ItDashboard()
     obj.scrap_agencies()
-    obj.scrap_agency(-3)
+    obj.scrap_agency(0)
